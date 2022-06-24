@@ -17,11 +17,13 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
+const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
+const {pre} = require('./src/Tools.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
+  pre();
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
