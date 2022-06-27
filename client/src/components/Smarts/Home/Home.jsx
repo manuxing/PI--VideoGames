@@ -1,5 +1,7 @@
+import { Component } from "react";
 import { connect } from "react-redux";
 import NavBar from "../../../components/Smarts/NavBar/NavBar";
+import { getVgs } from "../../../redux/actions";
 import CardContainer from "../../Dumbs/CardContainer/CardContainer";
 //cuando se monto hacer el pedido para las cartds, con un condicional sobre el estado de order puede ser 1 2 o 0
 //no me acuerdo si se trae si o si desde aca pero creo que no
@@ -7,22 +9,33 @@ import CardContainer from "../../Dumbs/CardContainer/CardContainer";
 
 
 
-const Home = ({data, orderBy}) => {
+export class Home extends Component {
+    //usar useeffect
 
-    return (
-        <>
-            <NavBar/>
-            <p>{orderBy}</p>
-            <CardContainer data = {data}/>
-        </>
-    );
-};
+    // componentDidMount(){
+    //     this.props.getVgs()
+    // }
+    // componentDidUpdate(){
+    //     this.props.getVgs()
+    //     console.log(this.props.data)
+    // }
 
-function mapStateToProps (state) {
-    return {
-        orderBy : state.orderBy
+    render(){
+        return (
+            <>
+                <NavBar/>
+                <CardContainer/>
+            </>
+        );
     }
 };
 
+// function mapStateToProps (state) {
+//     return {
+//         orderBy : state.orderBy,
+//         data: state.videoGames
+//     }
+// };
 
-export default connect(mapStateToProps,null)(Home);
+
+export default connect(null, {getVgs})(Home);

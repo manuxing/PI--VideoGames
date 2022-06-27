@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import tools from "../../../Tools";
 
 const Card = ({id, back, name, genres})=> { 
-
+    
     return (
   
         <div className={style.root}> 

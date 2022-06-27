@@ -1,21 +1,29 @@
 let tools = {};
 
 tools.display = (array) => {
-    
+    console.log(array)
     let arr = array.map(p => p.name);
     arr = arr.join(', ').trimEnd();
     return arr;
 
 };
 
+tools.displayPlat = (array) => {
+    console.log('q',array)
+    let arr = array.map(p => p.platform.name);
+    arr = arr.join(', ').trimEnd();
+    return arr;
+
+};
+
 tools.validate = (cambio) => {
-    
     let target = cambio.target;
+    console.log(target)
     let filter_name = /^(?!.*\.\.)(?!.*\.$)[^\W\s,."()&][\w.\s,."()&]{0,60}$/;
     let filter_desc = /^(?!.*\.\.)(?!.*\.$)[^\W\s,."()&][\w.\s,."()&]{0,730}$/;
-    let filter_date = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
+    let filter_date = /^(?:(?:19[0-9]{2}|200[0-9]|2010)([-/.]?)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:19(?:0[48]|[2648][048]|[13579][26])|2000|200[48])([-/.]?)0?2\2(?:29))$/;
     
-    switch (target.type) {
+    switch (target.type) {  
         case 'text' || "checkbox":{
             
             if(target.name === 'name' && filter_name.test(target.value) === false){
@@ -35,6 +43,8 @@ tools.validate = (cambio) => {
         }
         case 'date':{
             if(target.value.length > 0){
+                console.log(target.value)
+                target.value = target.value.toString();
                 if(filter_date.test(target.value) === false) return {name: target.name, message:'Invalid date, must be M/D/YYYY or MM/DD/YYYY'};
             };
             return {name: target.name, message: ''};

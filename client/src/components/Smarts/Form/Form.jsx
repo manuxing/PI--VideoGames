@@ -1,28 +1,29 @@
-//revisar si se puede mover las variables al cuerpo
-//genre tiene que ser opciones que envien un id por atras, en el caso de hacer uno nuevo  solo enviar el nombre
-//ver si hacemos que el display de las cosas sea por id o por otro pero la verdad creo que da igual el llamado es lo mismo
-//cuando se haya creado correctamente hacer algo?
+//revisar date y emprolijar
+//revisar checkboxes
 
 
 import React, { useState } from "react";
 import {connect, useDispatch} from "react-redux";
 import tools from "../../../Tools";
 import axios from "axios";
-import {createVg} from "../../../redux/actions/index.js";
+import {createVg, getGenres} from "../../../redux/actions/index.js";
 import { useEffect } from "react";
 
 let copia = [];
 let advertencias = [];
 let fakeValue = 0;
 
-const Form = ({createVg, genres}) => {
+const Form = ({createVg, genres, getGenres}) => {
     
-    let[input, setInput] = useState({name: '', description: '', dateRl: '', rating: 0, genres:[], platforms: []});
-    let[warning, setWarning] = useState({name: '', description: '', dateRl: '', rating: '', genres:'', platforms: ''});
+    let[input, setInput] = useState({name: '', description: '', img:'', dateRl: '', rating: 0, genres:[], platforms: []});
+    let[warning, setWarning] = useState({name: '', description: '', img:'', dateRl: '', rating: '', genres:'', platforms: ''});
     let[incomplete, setIncomplete] = useState({name: 1, description: 1, platforms: 1});
+    let[estan, setEstan] = useState(false);
     let[noSubmit, setnoSubmit] = useState(false);
+    let[submited, setSubmited] = useState(false);
 
     let handleChange = (evento) => {
+        if(submited === true) submited = false;
 
         if(evento.target.id){
            
@@ -32,7 +33,7 @@ const Form = ({createVg, genres}) => {
                     if(p !== parseInt(evento.target.id)){
                         return parseInt(p);
                     }
-                })
+                });
                 console.log(cuenta);
                 if(cuenta.length !== input.genres.length){
                     copia.genres = cuenta;
@@ -46,6 +47,7 @@ const Form = ({createVg, genres}) => {
                 let validado = tools.validate(evento);
                 tools.setter(evento, validado, warning, setIncomplete, setWarning);
                 let copia = input;
+                console.log('copia',copia)
                 let cuenta = copia.platforms.filter(p => {
                     if(p !== evento.target.id){
                         return p;
@@ -79,15 +81,16 @@ const Form = ({createVg, genres}) => {
         p.preventDefault();
         copia = incomplete;
         
-        if(tools.incomplete(copia) === false){
+        if(tools.incomplete(copia) === false && input.platforms.length > 0){
             let endData = data;
             endData.rating = tools.transRating(endData.rating);
             endData.platforms = endData.platforms.join(' ');
             console.log(endData);
             createVg(endData);
             setnoSubmit(false);
+            setSubmited(true);
             fakeValue = 0;
-            setInput({name: '', description: '', dateRl: '', rating: 0, genres:[], platforms: ''}); 
+            setInput({name: '', description: '', img:'', dateRl: '', rating: 0, genres:[], platforms: []}); 
             setIncomplete({name: 1, description: 1, platforms: 1});
         } else {
             setnoSubmit(true);
@@ -102,15 +105,22 @@ const Form = ({createVg, genres}) => {
         if(tools.incomplete(copia) === false){
             setnoSubmit(false);
         };
+        if(genres.length === 0){
+            getGenres()
+        }
 
     });
+    useEffect(()=>{
+        console.log(genres);
+        setEstan(true);
+    },[genres])
 
     return (
         <div>
             <form onSubmit={(e) => handleSubmit(e,input)}>
                 <div>
                     <label>Name  *</label>
-                    <input type = {'text'} name = {'name'} value = {input.name}
+                    <input type = {'text'} placeholder="Name" name = {'name'} value = {input.name}
                     onChange = {(p => handleChange(p))}/>
                     <div>
                         {
@@ -120,7 +130,7 @@ const Form = ({createVg, genres}) => {
                 </div>
                 <div>
                     <label>Description  *</label>
-                    <input type = {'text'} name = {'description'} value = {input.description}
+                    <input type = {'text'} placeholder="..." name = {'description'} value = {input.description}
                     onChange = {(p => {handleChange(p)})}/>
                     <div>
                         {
@@ -129,31 +139,40 @@ const Form = ({createVg, genres}) => {
                     </div>
                 </div>
                 <div>
-                    <label>Date of Release</label>
+                    <label>URl Image   </label>
+                    <input type = {'url'} placeholder="http://..." name = {'img'} value = {input.img}
+                    onChange = {(p => handleChange(p))}/>
+                </div>
+                <div>
+                    <label>Date of Release   </label>
                     <input type = {'date'} name = {'dateRl'} value = {input.dateRl}
                     onChange = {(p => handleChange(p))}/>
+                    <div>
                         {
                             advertencias.dateRl
                         }
+                    </div>
                 </div>
                 <div>
-                    <label>Rating</label>
+                    <label>Rating {fakeValue}</label>
                     <input type = {'range'} min="0" max="50" name = {'rating'} value = {input.rating}
                     onChange = {(p => handleChange(p))}/>
+                        {/* <div>
                         {
                             fakeValue
                         }
+                        </div> */}
                 </div>
                 <div>
                     <label>Genres</label>
-                    
                     <>
                         {
-                            genres.map(p => {
+                            estan === true ? genres.map(p => {
                                 return (
                                     <div key={p.id}>
                                             <input type={"checkbox"}
                                             name = {'genres'}
+                                            key={p.id}
                                             value = {p.name}
                                             id = {p.id}
                                             onChange = {(e) => {
@@ -163,42 +182,59 @@ const Form = ({createVg, genres}) => {
                                             <label  htmlFor={p.id}>{p.name}</label>
                                     </div>
                                 );
-                            })
+                            }) :
+                            <></>
                         }
                     </>
-                        
-                    
                 </div>
                 <div>
                     <label>Platforms  *</label>
                     <div>
-                        <input type = {'checkbox'} id="play" name = {'platforms'} value = {'play'}
+                        <input type = {'checkbox'} id="PC" name = {'platforms'} value = {'PC'}
                         onChange = {(p => handleChange(p))}/>
-                        <label  htmlFor={"play"}>play</label>
+                        <label  htmlFor={"PC"}>PC</label>
+                    </div>
+                        <input type = {'checkbox'} id="PlayStation 3"name = {'platforms'} value = {'PlayStation 3'}
+                        onChange = {(p => handleChange(p))}/>
+                        <label  htmlFor={"PlayStation 3"}>PlayStation 3</label>
                     </div>
                     <div>
-                        <input type = {'checkbox'} id="xbox" name = {'platforms'} value = {'xbox'}
+                        <input type = {'checkbox'} id="PlayStation 4"name = {'platforms'} value = {'PlayStation 4'}
                         onChange = {(p => handleChange(p))}/>
-                        <label  htmlFor={"xbox"}>xbox</label>
+                        <label  htmlFor={"PlayStation 4"}>PlayStation 4</label>
                     </div>
                     <div>
-                        <input type = {'checkbox'} id="compu"name = {'platforms'} value = {'compu'}
+                        <input type = {'checkbox'} id="PlayStation 5"name = {'platforms'} value = {'PlayStation 5'}
                         onChange = {(p => handleChange(p))}/>
-                        <label  htmlFor={"compu"}>compu</label>
+                        <label  htmlFor={"PlayStation 5"}>PlayStation 5</label>
                     </div>
                     <div>
-                        <input type = {'checkbox'} id="nintendods"name = {'platforms'} value = {'nintendods'}
+                        <input type = {'checkbox'} id="Xbox 360°" name = {'platforms'} value = {'Xbox 360°'}
                         onChange = {(p => handleChange(p))}/>
-                        <label  htmlFor={"nintendods"}>nds</label>
+                        <label  htmlFor={"Xbox 360°"}>Xbox 360°</label>
                     </div>
+                    <div>
+                        <input type = {'checkbox'} id="Xbox Series" name = {'platforms'} value = {'Xbox Series'}
+                        onChange = {(p => handleChange(p))}/>
+                        <label  htmlFor={"Xbox Series"}>Xbox Series</label>
+                    </div>
+                    <div>
+                        <input type = {'checkbox'} id="Android" name = {'platforms'} value = {'Android'}
+                        onChange = {(p => handleChange(p))}/>
+                        <label  htmlFor={"Android"}>Android</label>
+                    </div>
+                    <div>
                 </div>
                 <div>
                     <div>
                         <input type = {'submit'} value = {'create'}/>
                     </div>
                     <div>
-                        { 
-                         noSubmit ? (<p>Complete the required fields</p>) : ( <> </> )
+                        {
+                        <>
+                            <div>{noSubmit ? (<p>Complete the required fields</p>) : ( <> </> )}</div>
+                            <div>{submited ? (<p>Succesfully created</p>):(<></>)}</div>
+                        </>
                         }
                     </div>
                 </div>
@@ -213,4 +249,4 @@ function mapStateToProps (state) {
     }
 };
 
-export default connect (mapStateToProps,{createVg})(Form);
+export default connect (mapStateToProps,{createVg, getGenres})(Form);
