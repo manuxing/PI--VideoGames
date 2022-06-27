@@ -53,6 +53,15 @@ pre.pagination = (array, page, size) => {
     return res;
 };
 
+pre.displayPlat = (array) => {
+    console.log('q',array)
+    let arr = array.map(p => p.platform.name);
+    arr = arr.join(', ').trimEnd();
+    return arr;
+
+};
+
+
 
 
 module.exports = pre;

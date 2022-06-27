@@ -14,6 +14,8 @@ router.get('/', async(req, res, next) => {
     //query pag
 
     let {name, page, size} = req.query;
+    if (!page) page = 0;
+    if (!size) size = 15;
 
     if(!name){
 
@@ -22,17 +24,18 @@ router.get('/', async(req, res, next) => {
             let peticionDB = await Videogame.findAll({
                 include: Genre
             });
-            let peticion = peticionDB.length > 0 ? peticionDB.data.results.map(p => {
+            console.log(peticionDB)
+            let peticion = peticionDB.length > 0 ? peticionDB.map(p => {
                 return p.dataValues;
             }) : [];
 
-            peticion = pagination(peticion.concat(peticionA.data.results), page, size);
+            peticion = pagination(peticion.concat(peticionA.data.results), page.toString(), size.toString());
             peticion.content = peticion.content.map(p => {
                 let x = {
                     id: p.id,
                     name: p.name,
-                    back: p.background_image,
-                    genres: p.genres // va a haber que iterar en front
+                    back: p.background_image ? p.background_image : p.img,
+                    genres: p.genres 
                 };
                 return x; 
             });
@@ -63,7 +66,7 @@ router.get('/', async(req, res, next) => {
             let x = {
                 id: p.id,
                 name: p.name,
-                back: p.background_image,
+                back: p.background_image ? p.background_image : p.img,
                 genres: p.genres // va a haber que iterar en front
             };
             return x; 
@@ -86,9 +89,9 @@ router.post('/', async(req, res, next) => {
     //en el form que los generos por detras signifiquen sus respectivos ids, cuando se igrese uno nuevo 
     //hay que generarle su propio id y sumarlo a su tabla antes de asociarlo con toda la request
     //agregar pic en front
-
+    console.log(req.body)
     let {name, createdGen} = req.body;
-    let uni = req.body.genre_id;
+    let uni = req.body.genres;
     let esta = await Videogame.findAll({
         where: {
             name: name,
@@ -118,6 +121,7 @@ router.post('/', async(req, res, next) => {
     try{   
         
         let hacer = await Videogame.create(req.body);
+        console.log('ui',uni)
         let promesas = uni.map(p => new Promise(resolve => hacer.addGenres(p)));
         Promise.all(promesas);
 

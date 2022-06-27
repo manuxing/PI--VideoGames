@@ -10,7 +10,7 @@ router.get('/', async(req, res, next) =>{
 
     try {
         let peticionDB = await Genre.findAll();
-        peticionDB = pagination(peticionDB, page, size);
+        // peticionDB = pagination(peticionDB, page, size);
         
         return res.json(peticionDB);
 

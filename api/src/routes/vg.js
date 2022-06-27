@@ -1,6 +1,7 @@
 const { Router } = require('express');
 require('dotenv').config();
 const { Videogame, Genre } = require('../db.js');
+const pre = require('../Tools')
 const axios = require('axios').default;
 const router = Router();
 const { KEY } = process.env;
@@ -17,12 +18,12 @@ router.get('/:idi', async(req, res, next) => {
             let peticionDB = await Videogame.findByPk(idi,{
                 include: Genre,
             });
-            let {id, name, background_image, genres, description,
+            let {id, name, background_image, img, genres, description,
             released, rating, platforms} = peticionDB.dataValues;
             let respuesta = {
               id,
               name,
-              background_image,
+              back : background_image ? background_image : img,
               genres,
               description,
               date: released,
@@ -40,17 +41,17 @@ router.get('/:idi', async(req, res, next) => {
     } else {
         try {
             let peticionA = await axios.get(`https://api.rawg.io/api/games/${idi}?${KEY}`);
-            let {id, name, background_image, genres, description,
+            let {id, name, background_image, genres, description_raw,
                  released, rating, platforms} = peticionA.data;
             let respuesta = {
                     id,
                     name,
                     background_image,
                     genres,
-                    description,
+                    description_raw,
                     date: released,
                     rating,
-                    platforms,
+                    platforms: pre.displayPlat(platforms),
                 };
             
             return res.json(respuesta);
