@@ -22,5 +22,5 @@ const DetailVg = ({data}) => {
         </div>
     )
 };
-// let data = {name:'elGame', description:'ese ya sabes', rating:4, genres:[{name:'pepe'},{name: 'argebto'}], platforms:'play'}
+
 export default DetailVg;

@@ -2,8 +2,9 @@ import { type } from "../actions/types";
 
 const initialState = {
     videoGames: [],
-    genres: [],
+    genres: [{name:'a',id:0},{name:'b',id:1},{name:'c',id:2},{name:'d',id:3},{name:'e',id:4},],
     detailVg: {},
+    orderBy: 0,
 };
 
 export default function rootReducer(state=initialState, action){
@@ -32,7 +33,13 @@ export default function rootReducer(state=initialState, action){
                 genres: [...state.genres, action.payload]
             }
         }
+        case type.ORDER_N: {
+            return {
+                ...state,
+                orderBy: action.payload,
+            }
+        }
         default:
-            return state;
+            return {...state};
     }
 };

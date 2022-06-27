@@ -9,16 +9,14 @@ tools.display = (array) => {
 };
 
 tools.validate = (cambio) => {
+    
     let target = cambio.target;
     let filter_name = /^(?!.*\.\.)(?!.*\.$)[^\W\s,."()&][\w.\s,."()&]{0,60}$/;
     let filter_desc = /^(?!.*\.\.)(?!.*\.$)[^\W\s,."()&][\w.\s,."()&]{0,730}$/;
-    let filter_plat = /^(?!.*\.\.)(?!.*\.$)[^\W\s,."()&][\w.\s,."()&]{0,30}$/;
     let filter_date = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
-    let filter_rating = /(^(0{0,1}|([0-5][0-5]{0}))(\.[0-5]{0,1})?)$/;
     
-
     switch (target.type) {
-        case 'text':{
+        case 'text' || "checkbox":{
             
             if(target.name === 'name' && filter_name.test(target.value) === false){
 
@@ -28,9 +26,9 @@ tools.validate = (cambio) => {
 
                 return {incomplete: true, name: target.name, message: 'Only this special characters are allowed .,"()&, the limit of characters is 730'};
 
-            } else if (target.name === 'platforms' && filter_plat.test(target.value) === false) {
+            } else if (target.name === 'platforms') {
 
-                return {incomplete: true, name: target.name, message:'Invalid platform'};
+                return {name: target.name, message:''};
 
             };
             return {name: target.name, message: ''};
@@ -38,12 +36,6 @@ tools.validate = (cambio) => {
         case 'date':{
             if(target.value.length > 0){
                 if(filter_date.test(target.value) === false) return {name: target.name, message:'Invalid date, must be M/D/YYYY or MM/DD/YYYY'};
-            };
-            return {name: target.name, message: ''};
-        }
-        case 'number':{
-            if(target.value.length > 0){
-                if(filter_rating.test(target.value) === false) return {name: target.name, message:'Only numbers between 0 - 5 whit one decimal'};
             };
             return {name: target.name, message: ''};
         }
@@ -59,7 +51,7 @@ tools.setter = (evento, validado, warning, setIncomplete, setWarning) => {
         let newWarning = warning;
         let a = evento.target.name;
         if(newWarning[a]){
-            newWarning[a] = validado.message;
+                newWarning[a] = validado.message;
         } else { 
             newWarning = {...newWarning, [validado.name]: validado.message};
         };
@@ -92,6 +84,33 @@ tools.incomplete = (p) => {
     return false;
 };
 
+tools.order = (array) => {
+  
+    let arr = array;
+    for (let i = 1; i < arr.length; i++) {
+     for (let k = 0; k < i; k++) {
+      while(arr[i].rating < arr[k].rating){
+        let i1 = arr[i];
+        let k1 = arr[k];
+        arr[i] = k1;
+        arr[k] = i1;
+      };
+     };
+    }
+    return arr;
+};
 
+tools.transRating = (rating) => {
+    let x = rating.toString();
+    let inicio = x[0];
+    let final = x[1];
+    let res = `${inicio}.${final}`;
+    return parseFloat(res);
+};
 
+tools.alpha = (results) => {
+    return results.sort((a, b) =>
+     a.name.localeCompare(b.name)//using String.prototype.localCompare()
+    );
+};
 export default tools;

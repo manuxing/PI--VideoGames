@@ -9,8 +9,7 @@ const BHome = () => {
         <NavLink to={'/create'}>
             <div className={{/*imgcont*/}}>
                 create
-                <img src={{/*logo*/}} alt={"jaja"}/>
-                <img></img>
+                <img src={{/*logo*/}} alt={"Form"}/>
             </div>
         </NavLink>
     );

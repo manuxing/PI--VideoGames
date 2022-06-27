@@ -7,7 +7,7 @@ const BHome = () => {
     return (
         <NavLink to={'/'}>
             <div className={{/*imgcont*/}}>
-                <img src={{/*logo*/}}/>
+                <img src={{/*logo*/}} alt ="Home"/>
             </div>
         </NavLink>
     );
