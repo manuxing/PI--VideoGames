@@ -1,0 +1,63 @@
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-evenly;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 15px;
+    padding-bottom: 5px;
+    min-width: 100%;
+    min-height: 550px;
+}
+.paginado{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.buttonn{
+    border: none;
+    height: 30px;
+    width: 40px;
+    border-radius: 50px;
+    background-color: white;
+    border: 2px solid rgb(0, 0, 0);
+    color: white;
+}
+.buttonn img{
+    padding-top: 2px;
+    height: 15px;
+    width: 20px;
+}
+.order{
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: black ;
+}
+.linea{
+    padding: 1px;
+    height: 1px;
+    display: flex;
+    flex-direction: row-reverse;
+    background-image: linear-gradient(white, black);
+}
+.cont{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+.all{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("../../../img/back.png");
+    background-attachment: fixed;
+}
+.carga{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    padding-top: 300px;
+}

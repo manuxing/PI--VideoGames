@@ -1,41 +1,49 @@
 import { type } from "./types";
 import axios from "axios";
-// ver que hacer con el manejo de errores
 
 export function createVg(data){
     return function(dispatch){
         axios.post('http://localhost:3001/videogames', data)
         .then((res) => {
-            console.log(res);
             return {type: type.CREATE_VG, payload: res};
         })
         .then(p => {
-            console.log(p);
-            dispatch(p)
+            dispatch(p);
         })
-        .catch(e => console.log(e));
-    }
+        .catch(e => {
+            console.log(e);
+            dispatch({ type: 'ERROR', payload: e });
+        });
+    };
 };
 
 export function getDetails(id){
-    return function(dispatch){
-      axios.get(`http://localhost:3001/videogame/${id}`)
-        .then((res) => {
-            console.log('primer then', res)
-            dispatch({ type: type.GET_DETAILS, payload: res });
-        }).catch(e => 
-            console.log(e)
-        );
+    if(id){
+        return function(dispatch){
+            axios.get(`http://localhost:3001/videogame/${id}`)
+            .then((res) => {
+                    dispatch({ type: type.GET_DETAILS, payload: res });
+                }).catch(e => {
+                    console.log(e);
+                    dispatch({ type: 'ERROR', payload: e });
+            });
+        };
+    } else {
+        let res = {data:0};
+        return {type: type.GET_DETAILS, payload: res};
     };
 };
 
 export function getVgs(data){
     return function(dispatch){
-        axios.get(`http://localhost:3001/videogames${data && data.query ? data.query : ('')}`)
+        axios.get(`http://localhost:3001/videogames${data && data ? data : ('')}`)
         .then((res) => {
             dispatch({ type: type.GET_VGS, payload: res });
+        }).catch(e => {
+            console.log(e);
+            dispatch({ type: 'ERROR', payload: e });
         });
-    }   
+    };  
 };
 
 export function getGenres(){
@@ -43,10 +51,29 @@ export function getGenres(){
         axios.get(`http://localhost:3001/genres`)
         .then((res) => {
             dispatch({ type: type.GET_GENRES, payload: res });
+        }).catch(e => {
+            console.log(e);
+            dispatch({ type: 'ERROR', payload: e });
         });
-    }
+    };
 };
 
 export function orderByR (n){
-    return { type:type.ORDER_N, payload:n}
+    return { type:type.ORDER_N, payload:n };
+};
+
+export function filterGenre(payload) {
+    return { type: 'FILTER_GENRE', payload };
+};
+
+export function filterCreated(payload) {
+    return { type: 'FILTER_CREATED', payload };
+};
+
+export function search(payload) {
+    return { type: 'SEARCH', payload };
+};
+
+export function all() {
+    return { type: 'ALL' };
 };

@@ -1,13 +1,14 @@
 import React from "react";
-import style from "./BHome.css"
 import { NavLink } from "react-router-dom";
+import "./BHome.css"
+import  homeIcon  from "../../../img/home/home.png"; 
 
 
 const BHome = () => {
     return (
-        <NavLink to={'/'}>
-            <div className={{/*imgcont*/}}>
-                <img src={{/*logo*/}} alt ="Home"/>
+        <NavLink className="root" to={'/home'}>
+            <div className="buttonnn">
+                <img src={homeIcon}/>
             </div>
         </NavLink>
     );

@@ -1,0 +1,38 @@
+.home{
+    display: flex;
+    height: 100vh;
+    background-color: black;
+    
+    flex-direction: column;
+}
+
+.panell-wrap,.panel-wrap,.cards-wrap{
+    overflow-y: auto;
+}
+
+.panell-wrap{
+    display: flex;
+    flex: 1;
+}
+
+.panel{
+   width: 90%;
+    flex: 1;
+    
+}
+
+.cards-wrap{
+    margin-right: 2px;
+    flex: 6;
+}
+
+::-webkit-scrollbar{
+    width:  12px;
+}
+::-webkit-scrollbar-thumb{
+    background: linear-gradient(transparent, rgb(33, 33, 33));
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: linear-gradient(rgb(14, 14, 14), grey);
+}

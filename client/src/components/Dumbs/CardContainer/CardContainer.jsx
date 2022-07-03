@@ -1,77 +1,102 @@
-import { Component } from "react";
-import { connect } from "react-redux";
-import { orderByR, getVgs } from "../../../redux/actions";
-import Tools from "../../../Tools";
-import style from "./CardContainer.css";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getVgs, orderByR } from "../../../redux/actions";
 import Card from "../Card/Card";
-import { useEffect } from "react";
 import { useState } from "react";
+import Paginado from "../../Dumbs/paginado/paginado";
+import  alphaIcon  from "../../../img/todas/ordenar-por-alfabeto.png"; 
+import  nalphaIcon  from "../../../img/todas/ordenar-por-orden-alfabetico-inverso.png"; 
+import  orderIcon  from "../../../img/todas/ordenar-por-orden.png"; 
+import  norderIcon  from "../../../img/todas/ordenar-por-orden-numerico.png"; 
+import "./CardContainer.css";
+import Charging from "../charging/charging";
 
-const CardContainer = ({data, orderBy, getVgs}) => {
-
-        let [info, setInfo] = useState(false);
-        let [mount, setMount] = useState(false)
+const CardContainer = () => {
     
+        let data = useSelector(state => state.videoGames);
+        console.log(data);
+        let dispatch = useDispatch();
+        let [loading, setLoading] = useState(true);
+        let [switx, setSwitx] = useState(1);
+        let [switxR, setSwitxR] = useState(2);
+        const [current, setCurrent] = useState(1);
+        const [cPerPage] = useState(15);
+        const lastOne = current * cPerPage;
+        const firstOne = lastOne - cPerPage;
+        const inThisPage = data.slice(firstOne,lastOne);
+
+        const pagination = (pageN) => {
+            setCurrent(pageN);
+        };
+
+        const handleClickAlpha = () => {
+            dispatch(orderByR(switx));
+            switx === 1 ? setSwitx(1.5) : setSwitx(1)
+        };
+
+        const handleClickRanking = () => {
+            dispatch(orderByR(switxR));
+            switxR === 2 ? setSwitxR(2.5) : setSwitxR(2)
+        };
+
         useEffect(() => {
-            if(mount === false){
-                getVgs();
-                console.log('1',info);
-                console.log('data',data);
-                setMount(true)
-            }
-            console.log('aver princ',data)
-        });
-  
+            setCurrent(1);
+            setLoading(true);
+        },[]);
+        
         useEffect(() => {
-            
-            console.log('2',info)
-            if(orderBy === 2){
-                setMount(false);
-                let data_ord = Tools.order(data);
-                console.log('2',data_ord)
-                setInfo(data_ord);
-            } else if(orderBy === 1){
-                setMount(false);
-                let data_ord = Tools.alpha(data);
-                setInfo(data_ord);
-            } else {
-                console.log(0)
-                setInfo(data);
+            let x = () =>{
+                console.log(data);
+                if(data.length > 0)
+                setLoading(false);
             };
-            console.log('aver',data)
-        },[orderBy,data]);
-   
-    
+            setTimeout(x, 500);
+        },[data]);
+
         return (
-            <div>
-            {
-                info[1] ?
-                 info.map(p => { 
-                    return (
-                        <Card 
-                        key = {p.id}
-                        id = {p.id}
-                        back = {p.back} /*? p.back : 'https://e7.pngegg.com/pngimages/779/957/png-clipart-video-games-video-game-consoles-red-dead-redemption-video-game-developer-cool-gaming-logos-blue-game-logo.png'}*/ 
-                        name = {p.name} 
-                        genres = {p.genres ? p.genres : []} 
-                        />
-                    );
-                }  
-                ):
-                    <div>carganco</div>
-            }
+            <div className="all">
+                <div className="order">
+                    <button className="buttonn" onClick={() =>handleClickAlpha()}>
+                        {switx === 1 ? <img src={nalphaIcon}/> : <img src={alphaIcon}/>}
+                    </button>
+                    <button className="buttonn" onClick={() =>handleClickRanking()}>
+                    {switxR === 2 ? <img src={norderIcon}/> : <img src={orderIcon}/>}
+                    </button>
+                </div>
+            <div className="linea">
+
             </div>
+            {loading === false ?
+                <div className="cont">
+                    
+                    <div className="cards">
+                    {
+                        inThisPage.map(p => { 
+                            return (
+                                <Card 
+                                key = {p.id}
+                                id = {p.id}
+                                back = {p.back ? p.back : 'https://e7.pngegg.com/pngimages/779/957/png-clipart-video-games-video-game-consoles-red-dead-redemption-video-game-developer-cool-gaming-logos-blue-game-logo.png'}
+                                name = {p.name}
+                                rating = {p.rating}
+                                genres = {p.genres ? p.genres : []} 
+                                />
+                                );
+                            }  
+                            ) 
+                        }
+                    </div>
+                    <div className="paginado">
+                        <Paginado cPerPage={cPerPage} pagination={pagination}/>
+                    </div>
+            </div> :
+            <div className="carga">
+
+                <Charging></Charging>
+            </div>
+            }
+                </div>
         );
 };
 
-
-function mapStateToProps (state) {
-    return {
-        orderBy : state.orderBy,
-        data: state.videoGames
-    }
-};
-
-
-
-export default connect(mapStateToProps,{orderByR, getVgs})(CardContainer);
+export default CardContainer;

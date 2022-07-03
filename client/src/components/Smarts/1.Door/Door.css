@@ -1,0 +1,52 @@
+*{
+    margin:0;
+    padding: 0;
+}
+.Bcontainer{
+    display: flex;
+    margin-bottom: 200px;
+    height: 100px;
+    perspective: 800px;
+    background-color: rgb(203, 59, 59);
+    transform-style:preverse-3d;
+    outline:1px solid transparent;
+    transition:all 3s ease-out;
+}
+.Bcontainer:hover{
+    transform: translateY(-10px) rotateX(60deg) rotateY(-20deg);
+}
+.Bcontainer:hover button{
+    text-shadow: rgba(88, 135, 141, 0.747) -8px 0,
+                 rgb(158, 238, 131) -6px 0,
+                 rgba(230, 52, 52, 0.771) -12px 0;
+}
+.Button:hover{
+    transform: translateY(20px) rotateX(60deg) rotateY(20deg);
+}
+.Button{
+    border:none;
+    padding:30px 80px;
+    text-transform:uppercase;
+    background: #362e2e;
+    color:rgba(195, 249, 250, 0.923);
+    letter-spacing: 4px;
+    font-size: 1.3rem;
+    font-weight:800;
+    transform-style:preverse-3d;
+    outline:1px solid transparent;
+    transition:all 0.5s ease-out;
+    cursor:pointer;
+    height: 100px;
+    width: 250px;
+}
+
+.page{
+    background-image: url("https://wallpaperaccess.com/full/3166805.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items:center;
+}

@@ -1,0 +1,32 @@
+.inputt{
+    height: 34px;
+    width: 300px;
+    border: none;
+    border-radius: 50px;
+    width: 500px;
+    height: 30px;
+    background-color: transparent;
+    border: 2px solid rgb(217, 216, 227);
+    color: rgb(144, 144, 144);
+    padding-left: 13px;
+    font-size: 15px;
+}
+.button{
+    border: none;
+    height: 34px;
+    width: 45px;
+    border-radius: 50px;
+    background-color: transparent;
+    border: 2px solid rgb(217, 216, 227);
+    color: white;
+}
+.button img{
+    padding-top: 2px;
+}
+.divv{
+    display: flex;
+    margin-right: 10px;
+}
+.nav{
+    display: flex;
+}

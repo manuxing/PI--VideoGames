@@ -1,0 +1,19 @@
+.nav{
+    display: flex;
+    height: 80px;
+    padding-top: 7px;
+    width: 100%;
+    justify-content: flex-start;
+    justify-content: space-between;
+    background-color: black;
+}
+.buttons{
+    display: flex;
+    padding-top: 3px;
+    margin-left: 5px;
+}
+.search{
+    align-self: center;
+    display: flex;
+    margin-right: 10px;
+}

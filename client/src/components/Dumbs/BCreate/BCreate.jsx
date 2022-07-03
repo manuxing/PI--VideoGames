@@ -1,19 +1,19 @@
 import React from "react";
-import style from "./BCreate.css"
 import { NavLink } from "react-router-dom";
+import "./BCreate.css"
+import  formIcon  from "../../../img/form/form.png"; 
 
 
-const BHome = () => {
+const BCreate = () => {
 
     return (
-        <NavLink to={'/create'}>
-            <div className={{/*imgcont*/}}>
-                create
-                <img src={{/*logo*/}} alt={"Form"}/>
+        <NavLink className="root" to={'/create'}>
+            <div className="buttoon">
+                <img src={formIcon}/>
             </div>
         </NavLink>
     );
 
 };
 
-export default BHome;
+export default BCreate;

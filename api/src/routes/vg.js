@@ -10,10 +10,10 @@ const { KEY } = process.env;
 router.get('/:idi', async(req, res, next) => {
 
     let {idi} = req.params;
-    const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+    const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
     if(!idi) next({message:'You must enter an ID'});
-    if(regexExp.test(idi)){
+    if(regExp.test(idi)){
         try {
             let peticionDB = await Videogame.findByPk(idi,{
                 include: Genre,
@@ -35,7 +35,7 @@ router.get('/:idi', async(req, res, next) => {
 
         } catch (e){
 
-            return next(e,{message:'Videogame not found'});
+            return next({status: 400, message:'Videogame not found'});
 
         };
     } else {
@@ -58,7 +58,11 @@ router.get('/:idi', async(req, res, next) => {
 
         } catch(e){
 
-            next({e,message:'Videogame not found'});
+            if(e.name && e.name === "AxiosError"){
+                return next(e);
+            }
+
+            return next({status: 400, message: "Video Game not found"});
 
         };
     };

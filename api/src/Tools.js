@@ -12,6 +12,26 @@ let queryCleaner = (query) => {
 
 pre.queryCleaner = queryCleaner;
 
+pre.get = async(url) => {
+    let count = 1;
+    
+    let respuestas = [];
+    
+    while(count < 6){
+        let query = `&page=${count}`;
+        try{
+            let respuesta = await axios.get(`${url}${query}`);
+            respuestas.push(respuesta.data.results);
+            count++;
+            
+        } catch(e){
+            return next(e);
+        };
+    };
+    console.log(respuestas)
+    return respuestas.flat();
+};
+
 pre.pre = async() => {
     try {
         let res1 = await axios.get(`https://api.rawg.io/api/genres?${KEY}`);
@@ -29,38 +49,47 @@ pre.pre = async() => {
     };
 };
 
-
 pre.pagination = (array, page, size) => {
-    let res = {};
-    let filtrado = [];
-    let cuenta =  array.length;
-    let j = 0;
+    // let res = {};
+    // let filtrado = [];
+    // let cuenta =  array.length;
+    // let j = 0;
    
-    page = queryCleaner(page);
-    size = queryCleaner(size);
+    // page = queryCleaner(page);
+    // size = queryCleaner(size);
     
-    if(size > 15) size = 15;
+    // if(size > 15) size = 15;
 
-    for (let i = Math.floor(page * size);j < size; j++, i++) {
-        if(array[i] === undefined) throw ({message: "You've been playing whit my query parameters dont u? TT"});
-        filtrado.push(array[i]);
-    };
+    // for (let i = Math.floor(page * size);j < size; j++, i++) {
+    //     if(array[i] === undefined) continue;
+    //     filtrado.push(array[i]);
+    // };
 
-    res.content = filtrado;
-    res.results = cuenta;
-    res.pages = Math.ceil(cuenta / size);
+    // let pages = Math.ceil(cuenta / size);
+    // let pagesArr = [];
+
+    // for (let i = 0; i < pages; i++) {
+    //         pagesArr.push(i)        
+    // }
+
+    // res.content = filtrado;
+    // res.results = cuenta;
+    // res.pages = pagesArr;
+    let res = array;
 
     return res;
 };
 
 pre.displayPlat = (array) => {
-    console.log('q',array)
     let arr = array.map(p => p.platform.name);
     arr = arr.join(', ').trimEnd();
     return arr;
-
 };
 
+pre.separateIds = (array) => {
+    let res = array.map(p => p.id);
+    return res;
+}
 
 
 
