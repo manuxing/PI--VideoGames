@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux"
 import {useParams} from "react-router-dom"
 import BHome from "../../Dumbs/BHome/BHome";
-import BCreate from "../../Dumbs/BCreate/BCreate";
 import tools from "../../../Tools";
 import { getDetails } from "../../../redux/actions";
 import { useEffect } from "react";
@@ -25,7 +24,6 @@ const DetailVg = ({data, getDetails}) => {
     useEffect(() => {
         if(data.id){
             setLoading(false);
-            console.log(data);
         };
     },[data]);
 

@@ -17,6 +17,17 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
     let[incomplete, setIncomplete] = useState({name: 1, description: 1, platforms: 1});
     let[noSubmit, setnoSubmit] = useState(false);
     let[submited, setSubmited] = useState(false);
+    
+    let uncheck = () =>{
+        var inputs = document.getElementsByTagName('input');
+    
+        for (var i=0; i<inputs.length; i++)  {
+            if (inputs[i].type == 'checkbox')   {
+            inputs[i].checked = false;
+        }
+    }
+
+    }
 
     let handleChange = (evento) => {
         console.log(tools.url)
@@ -58,7 +69,6 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
             
         } else{
 
-            console.log(evento);
             let validado = tools.validate(evento);
             tools.setter(evento, validado, warning, setIncomplete, setWarning);
             if(evento.target.name === 'rating'){
@@ -71,8 +81,8 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
     };
     
     let handleSubmit = (p,data) => {
-
         p.preventDefault();
+
         
         if(tools.incomplete(incomplete) === false && input.platforms.length > 0){
             let endData = data;
@@ -87,8 +97,11 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
             setSubmited(true);
             setFake(0);
             setInput({name: '', description: '', img:'', dateRl: '', rating: 0, genres:[], platforms: []}); 
+            setWarning({name: '', description: '', img:'', dateRl: '', rating: '', genres:'', platforms: ''});
             setIncomplete({name: 1, description: 1, platforms: 1});
+            uncheck();
         } else {
+            p.preventDefault();
             setnoSubmit(true);
         };  
 

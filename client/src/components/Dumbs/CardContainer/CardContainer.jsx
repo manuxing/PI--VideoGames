@@ -14,7 +14,6 @@ import Charging from "../charging/charging";
 const CardContainer = () => {
     
         let data = useSelector(state => state.videoGames);
-        console.log(data);
         let dispatch = useDispatch();
         let [loading, setLoading] = useState(true);
         let [switx, setSwitx] = useState(1);
@@ -46,7 +45,6 @@ const CardContainer = () => {
         
         useEffect(() => {
             let x = () =>{
-                console.log(data);
                 if(data.length > 0)
                 setLoading(false);
             };

@@ -8,18 +8,11 @@ const LatBar = () => {
     let genres = useSelector((state) => state.genres);
     let dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getVgs)
-    },[dispatch])
-
-
     const handleClick = (p) => {
-        console.log(p.target)
         dispatch(filterGenre(p.target.value));
     };
 
     const handleClickOrigin = (p) => {
-        console.log(p.target)
         dispatch(filterCreated(p.target.value));
     };
 

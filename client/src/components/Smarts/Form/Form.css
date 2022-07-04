@@ -32,7 +32,8 @@
     border: 2px solid rgb(217, 216, 227);
     color: rgb(198, 194, 194);
     padding: 10px 10px;
-    font-size: 15px;
+    font-size: 17px;
+    font-family: "Source Sans Pro", regular;
 }
 .ratingg{
     display: flex;

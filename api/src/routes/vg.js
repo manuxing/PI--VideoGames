@@ -12,7 +12,7 @@ router.get('/:idi', async(req, res, next) => {
     let {idi} = req.params;
     const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
-    if(!idi) next({message:'You must enter an ID'});
+    if(!idi) next({status:400, message:'You must enter an ID'});
     if(regExp.test(idi)){
         try {
             let peticionDB = await Videogame.findByPk(idi,{

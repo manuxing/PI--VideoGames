@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetails, getVgs, getGenres } from "../../../redux/actions";
 import NavBar from "../../../components/Smarts/NavBar/NavBar";
 import CardContainer from "../../Dumbs/CardContainer/CardContainer";
-import LatBar from "../.LatBar/LatBar";
+import LatBar from "../LatBar/LatBar";
 import "./Home.css"
 
 
