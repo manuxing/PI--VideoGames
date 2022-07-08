@@ -46,7 +46,7 @@ const DetailVg = ({data, getDetails}) => {
                 </div>
                 <div className="rat">
                     <h3>{data.rating}</h3>
-                    <img src={icon}/>
+                    <img src={icon} alt="icon"/>
                 </div> 
             </div>
             </div>

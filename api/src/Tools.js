@@ -89,7 +89,7 @@ pre.displayPlat = (array) => {
 pre.separateIds = (array) => {
     let res = array.map(p => p.id);
     return res;
-}
+};
 
 
 

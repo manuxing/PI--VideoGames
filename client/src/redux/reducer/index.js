@@ -51,7 +51,7 @@ export default function rootReducer(state=initialState, action){
             } else if (action.payload === 1.5){
                 filtrado = all.sort((a, b) => b.name.localeCompare(a.name));
             } else if (action.payload === 2){
-                filtrado = all.sort((a,b)=> a.rating-b.rating);
+                filtrado = all.sort((a,b)=> a.rating - b.rating);
             } else if (action.payload === 2.5){
                 filtrado = all.sort((a,b) => b.rating - a.rating);
             } else if (action.payload === 0){

@@ -1,5 +1,5 @@
 import React from "react";
-import style from './Card.css';
+import './Card.css';
 import { NavLink } from "react-router-dom";
 import tools from "../../../Tools";
 import  icon  from "../../../img/star.png"; 

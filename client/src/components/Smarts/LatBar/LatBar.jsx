@@ -1,6 +1,6 @@
-import React ,{useEffect, useState}from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterGenre, filterCreated, getVgs, orderByR } from "../../../redux/actions";
+import { filterGenre, filterCreated } from "../../../redux/actions";
 import "./LatBar.css"
 
 const LatBar = () => {

@@ -8,7 +8,7 @@ const BHome = () => {
     return (
         <NavLink className="root" to={'/home'}>
             <div className="buttonnn">
-                <img src={homeIcon}/>
+                <img src={homeIcon} alt ="home"/>
             </div>
         </NavLink>
     );

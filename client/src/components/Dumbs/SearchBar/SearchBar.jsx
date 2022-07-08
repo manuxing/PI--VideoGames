@@ -35,10 +35,10 @@ const SearchBar = ({videoGames, page, search, all, getVgs}) => {
               onChange={(e) => handleChange(e)}
             />
           <button className="button" type="submit">
-            <img src={searchIcon}/>
+            <img src={searchIcon} alt="icon"/>
           </button>
         <button className="button" onClick={()=>all()}>
-          <img src={resetIcon}/>
+          <img src={resetIcon} alt="icon"/>
         </button>
           </div>
         </form>
@@ -52,4 +52,4 @@ let mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps,{getVgs, search, all, search})(SearchBar);
+export default connect(mapStateToProps,{getVgs, search, all})(SearchBar);

@@ -18,7 +18,7 @@ let Home = () => {
         if(genres.length < 1){
             dispatch(getGenres());
         }
-    },[]);
+    },[dispatch]);
 
     return (
         <div className="home">

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { getVgs, getGenres } from "../../../redux/actions";
+import { getGenres } from "../../../redux/actions";
 import "./Door.css";
 
 

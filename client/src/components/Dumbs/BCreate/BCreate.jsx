@@ -9,7 +9,7 @@ const BCreate = () => {
     return (
         <NavLink className="root" to={'/create'}>
             <div className="buttoon">
-                <img src={formIcon}/>
+                <img src={formIcon} alt = "create" />
             </div>
         </NavLink>
     );

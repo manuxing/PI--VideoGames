@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import {connect, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import tools from "../../../Tools";
 import BHome from "../../Dumbs/BHome/BHome";
-import axios from "axios";
 import {createVg, getGenres, getVgs} from "../../../redux/actions/index.js";
 import { useEffect } from "react";
 import  icon  from "../../../img/star.png"; 
@@ -22,16 +21,15 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
         var inputs = document.getElementsByTagName('input');
     
         for (var i=0; i<inputs.length; i++)  {
-            if (inputs[i].type == 'checkbox')   {
+            if (inputs[i].type === 'checkbox'){
             inputs[i].checked = false;
-        }
-    }
+            };
+
+        };
 
     }
 
     let handleChange = (evento) => {
-        console.log(tools.url)
-        if(submited === true) submited = false;
         
         if(evento.target.id){
             
@@ -68,16 +66,17 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
             };
             
         } else{
-
+            
             let validado = tools.validate(evento);
             tools.setter(evento, validado, warning, setIncomplete, setWarning);
             if(evento.target.name === 'rating'){
                 setFake(tools.transRating(evento.target.value));
             };
             setInput(previo => ({...previo, [evento.target.name]:evento.target.value}));
-
+            
         }
         
+        if(submited === true) setSubmited(false);
     };
     
     let handleSubmit = (p,data) => {
@@ -168,7 +167,7 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
                         <input className="range" type = {'range'} min="0" max="50" name = {'rating'} value = {input.rating}
                         onChange = {(p => handleChange(p))}/>
                         <label>{fakeValue}</label>
-                        <img src={icon}/>
+                        <img src={icon} alt ="icon"/>
                     </div>
                 </div>
                 <div className="warning"></div>
@@ -238,7 +237,7 @@ const Form = ({createVg, getVgs, genres, getGenres}) => {
                         {
                         <>
                             {noSubmit ? (<div>Complete the required fields</div>) : ( <> </> )}
-                            {submited ? (<div>Succesfully created</div>):(<></>)}
+                            {submited === true ? (<div>Succesfully created</div>):(<></>)}
                         </>
                         }
                     </div>

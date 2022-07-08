@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVgs, orderByR } from "../../../redux/actions";
+import { orderByR } from "../../../redux/actions";
 import Card from "../Card/Card";
 import { useState } from "react";
 import Paginado from "../../Dumbs/paginado/paginado";
@@ -13,11 +13,14 @@ import Charging from "../charging/charging";
 
 const CardContainer = () => {
     
-        let data = useSelector(state => state.videoGames);
         let dispatch = useDispatch();
+
+        let data = useSelector(state => state.videoGames);
         let [loading, setLoading] = useState(true);
+
         let [switx, setSwitx] = useState(1);
         let [switxR, setSwitxR] = useState(2);
+
         const [current, setCurrent] = useState(1);
         const [cPerPage] = useState(15);
         const lastOne = current * cPerPage;
@@ -55,10 +58,10 @@ const CardContainer = () => {
             <div className="all">
                 <div className="order">
                     <button className="buttonn" onClick={() =>handleClickAlpha()}>
-                        {switx === 1 ? <img src={nalphaIcon}/> : <img src={alphaIcon}/>}
+                        {switx === 1 ? <img src={nalphaIcon} alt="icon"/> : <img src={alphaIcon} alt="icon"/>}
                     </button>
                     <button className="buttonn" onClick={() =>handleClickRanking()}>
-                    {switxR === 2 ? <img src={norderIcon}/> : <img src={orderIcon}/>}
+                        {switxR === 2 ? <img src={norderIcon} alt="icon"/> : <img src={orderIcon} alt="icon"/>}
                     </button>
                 </div>
             <div className="linea">
