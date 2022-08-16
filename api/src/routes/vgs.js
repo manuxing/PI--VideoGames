@@ -58,12 +58,12 @@ router.get('/', async(req, res, next) => {
     try{
 
         let peticionA = await get(`https://api.rawg.io/api/games?search=${name}&${KEY}`);
-        let peticionDB = await Videogame.findAll({
-            where:{
-            [Op.like]: `%${name}%`
-            },
-            include: Genre,
-        });
+            let peticionDB = await Videogame.findAll({
+                where:{
+                [Op.like]: `%${name}%`
+                },
+                include: Genre,
+            });
         let peticion = peticionDB.map(p => {
             return p.dataValues;
         });

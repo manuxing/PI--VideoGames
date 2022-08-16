@@ -47,6 +47,7 @@ const CardContainer = () => {
         },[]);
         
         useEffect(() => {
+            setCurrent(1);
             let x = () =>{
                 if(data.length > 0)
                 setLoading(false);
