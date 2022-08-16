@@ -31,12 +31,12 @@ Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credencial
 
 Adicionalmente será necesario que creen desde psql una base de datos llamada `videogames`
 
-_Pasos_:
+__Pasos:__
 
-PI-Videogames-main/client: npm i
-Start project: npm start
-PI-Videogames-main/api: npm i
-Start server: npm start
+- PI-Videogames-main/client: npm i
+- Start project: npm start
+- PI-Videogames-main/api: npm i
+- Start server: npm start
 
 
 
@@ -57,3 +57,17 @@ La idea general es crear una aplicación en la cual se puedan ver los distintos 
 - [ ] Sequelize - Postgres
 - [ ] CSS3 sin ninguna libreria externa
 
+__Imagenes:__
+
+<br>
+ <div display = "flex">
+    <img src="./assets/1.png" alt="1" height="380" width="630"/>
+    <br>
+  <img src="./assets/2.png" alt="2" height="380" width="630"/>
+  <br>
+
+  <img src="./assets/3.png" alt="3" height="380" width="630"/>
+  <br>
+
+  <img src="./assets/4.png" alt="4" height="380" width="630"/>
+</div>
