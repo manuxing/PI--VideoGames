@@ -1,5 +1,4 @@
 const { Router } = require('express');
-require('dotenv').config();
 const { Videogame, Genre } = require('../db.js');
 const pre = require('../Tools')
 const axios = require('axios').default;

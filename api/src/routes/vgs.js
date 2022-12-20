@@ -1,13 +1,10 @@
 const { Router } = require('express');
-require('dotenv').config();
 const { Videogame, Genre } = require('../db.js');
 const { Op } = require('sequelize');
 const axios = require('axios').default;
 const router = Router();
 const { pagination, get, separateIds} = require('../Tools.js');
 const { KEY } = process.env;
-  
-
 
 router.get('/', async(req, res, next) => {
 
