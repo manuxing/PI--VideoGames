@@ -1,9 +1,10 @@
 const { Op, Sequelize } = require('sequelize');
 const fs = require('fs');
+require('dotenv').config();
 const path = require('path');
 const {DB_USER, DB_PASSWORD, DB_HOST} = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/videogames`, {
+const sequelize = new Sequelize(`postgres://postgres:f3nrir2o,,@localhost:5434/videogames`, {
   logging: false,
   native: false, 
 });

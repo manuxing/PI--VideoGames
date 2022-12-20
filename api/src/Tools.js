@@ -1,5 +1,4 @@
-require('dotenv').config();
-const { KEY } = process.env;
+const { KEY } = process.env || "94ff1b02072746b5b81d82a5b8072a41";
 const { Genre } = require('./db.js');
 const axios = require('axios').default;
 
@@ -34,7 +33,7 @@ pre.get = async(url) => {
 
 pre.pre = async() => {
     try {
-        let res1 = await axios.get(`https://api.rawg.io/api/genres?${KEY}`);
+        let res1 = await axios.get(`https://api.rawg.io/api/genres?key=94ff1b02072746b5b81d82a5b8072a41`);
         let respuesta = res1.data.results.map(p => {
             let x = {
                 id: p.id,
@@ -42,7 +41,7 @@ pre.pre = async() => {
             };
             return x;
         });
-        await Genre.bulkCreate(respuesta);
+        await Genre.bulkCreate(respuesta).then(res => console.log("data base preloaded"))
     } catch (e){
         console.log('Cannot preload DataBase');
         throw ({message:'Cannot preload DataBase'});
